@@ -1,0 +1,54 @@
+---
+export interface Props {
+  title: string;
+  items: string[];
+}
+const { title, items } = Astro.props;
+---
+
+<section class="incl">
+  <div class="wrap">
+    <h2>{title}</h2>
+    <ul>
+      {items.map((it) => (
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 12l5 5L20 6" />
+          </svg>
+          <span>{it}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .incl {
+    padding: 3.5rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+  }
+  ul {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    ul { grid-template-columns: repeat(2, 1fr); column-gap: 2rem; }
+  }
+  li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    color: var(--graphite);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  li svg { color: var(--brass); flex-shrink: 0; margin-top: 0.2rem; }
+</style>

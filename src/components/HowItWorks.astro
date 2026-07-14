@@ -1,0 +1,75 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;
+  steps: { title: string; body: string }[];
+}
+const { eyebrow, title, steps } = Astro.props;
+---
+
+<section class="hiw" aria-label={title}>
+  <div class="wrap">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <ol>
+      {steps.map((s, i) => (
+        <li>
+          <span class="num tabular">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="step-title">{s.title}</p>
+            <p class="step-body">{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .hiw {
+    padding: 4.5rem 1.25rem;
+    background: var(--paper);
+  }
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+  h2 { max-width: 26ch; }
+  ol {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+  }
+  @media (min-width: 800px) {
+    ol { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  }
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .num {
+    font-family: var(--font-display);
+    color: var(--brass);
+    font-size: 1.35rem;
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+  .step-title {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 0.35rem;
+  }
+  .step-body {
+    color: var(--graphite);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+</style>

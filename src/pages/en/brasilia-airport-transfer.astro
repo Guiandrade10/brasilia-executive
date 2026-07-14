@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import IncludedList from '../../components/IncludedList.astro';
+import PriceTable from '../../components/PriceTable.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import OtherServices from '../../components/OtherServices.astro';
+import { images } from '../../data/images';
+
+const lang = 'en' as const;
+
+const title = 'Brasília Airport Transfer (BSB) | Fixed Price | Brasília Executive';
+const description =
+  'Executive transfer at Brasília International Airport with flight tracking, a name board and a black executive sedan. Fixed price confirmed before pickup.';
+
+const includedItems = [
+  'Real-time flight tracking',
+  '60 minutes of complimentary wait time on arrival',
+  'Bottled water on board',
+  'Suited chauffeur with a name board',
+  'Luggage assistance at arrivals'
+];
+
+const priceRows: [string, string][] = [
+  ['Airport ↔ Plano Piloto (hotels and Esplanada)', 'from R$ 220'],
+  ['Airport ↔ Lago Sul / Lago Norte', 'from R$ 250'],
+  ['Meet-and-greet with name board + extended wait', 'from R$ 320']
+];
+
+const steps = [
+  {
+    title: 'Send the flight number on WhatsApp',
+    body: 'Flight, time and destination in Brasília.'
+  },
+  {
+    title: 'We confirm a fixed price',
+    body: 'The price does not change with traffic or delays.'
+  },
+  {
+    title: 'Meet and greet on arrival',
+    body: 'Suited chauffeur waiting with a name board.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'What if my flight is delayed?',
+    a: 'We track the flight in real time and adjust the pickup at no extra cost. The first 60 minutes after landing are complimentary.'
+  },
+  {
+    q: 'How does the meet-and-greet work?',
+    a: 'The chauffeur waits at arrivals holding a name board. Ideal for VIP guests and delegations.'
+  },
+  {
+    q: 'Do you cover overnight flights?',
+    a: 'Yes. We run 24 hours with advance booking on WhatsApp.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Airport transfer',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Brasília Airport Transfer',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/en/' },
+    { '@type': 'ListItem', position: 2, name: 'Airport Transfer', item: 'https://brasiliaexecutive.com.br/en/brasilia-airport-transfer' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="transfer"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="BRASÍLIA AIRPORT TRANSFER"
+    headline="Executive transfer at Brasília International Airport"
+    intro="Meet-and-greet at arrivals with a name board, real-time flight tracking and a black executive sedan waiting. Price confirmed before pickup, with no surge pricing."
+    bgImage={images.transfer.src}
+    bgAlt={images.transfer.alt[lang]}
+  />
+
+  <IncludedList title="What's included" items={includedItems} />
+
+  <PriceTable
+    title="Reference rates"
+    columns={['Route', 'Price']}
+    rows={priceRows}
+    note="Reference rates. The fixed price is confirmed at booking, based on schedule and route."
+  />
+
+  <HowItWorks
+    eyebrow="BOOKING"
+    title="How to book"
+    steps={steps}
+  />
+
+  <FAQ title="Frequently asked questions" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="transfer"
+    headline="Send us your flight number and get a fixed quote."
+  />
+
+  <OtherServices lang={lang} currentKey="transfer" title="OTHER SERVICES" />
+</Base>

@@ -1,0 +1,47 @@
+---
+import type { Lang } from '../i18n/ui';
+import type { WhatsContext } from '../data/whatsapp';
+import { t } from '../i18n/ui';
+import WhatsAppCTA from './WhatsAppCTA.astro';
+import SkylineDivider from './SkylineDivider.astro';
+
+export interface Props {
+  lang: Lang;
+  headline: string;
+  context?: WhatsContext;
+}
+const { lang, headline, context = 'global' } = Astro.props;
+---
+
+<section class="final">
+  <div class="wrap">
+    <SkylineDivider variant="inline" color="brass" />
+    <h2>{headline}</h2>
+    <WhatsAppCTA
+      context={context}
+      lang={lang}
+      label={t(lang, 'cta.final')}
+      variant="primary"
+      analytics={`whatsapp_final_${context}_${lang}`}
+    />
+  </div>
+</section>
+
+<style>
+  .final {
+    padding: 5rem 1.25rem;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .wrap {
+    max-width: 52rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+    justify-items: center;
+  }
+  h2 {
+    max-width: 22ch;
+  }
+</style>

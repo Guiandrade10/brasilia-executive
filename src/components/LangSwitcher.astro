@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../i18n/ui';
+import { routes } from '../i18n/ui';
+
+export interface Props {
+  current: Lang;
+  page: keyof typeof routes.pt;
+}
+
+const { current, page } = Astro.props;
+const target: Lang = current === 'pt' ? 'en' : 'pt';
+const href = routes[target][page];
+const label = target === 'pt' ? 'PT' : 'EN';
+const aria = current === 'pt' ? 'Switch to English' : 'Mudar para português';
+---
+
+<a href={href} aria-label={aria} class="lang-switch" hreflang={target}>
+  <span aria-hidden="true">{label}</span>
+</a>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line-dark);
+    color: var(--paper);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 0 0.5rem;
+    transition: border-color 150ms ease;
+  }
+  .lang-switch:hover { border-color: var(--brass); }
+</style>

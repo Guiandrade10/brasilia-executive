@@ -1,0 +1,65 @@
+---
+export interface Props {
+  variant?: 'inline' | 'hero';
+  color?: 'brass' | 'line';
+  class?: string;
+}
+const { variant = 'inline', color = 'brass', class: className = '' } = Astro.props;
+const stroke = color === 'brass' ? 'var(--brass)' : 'var(--line)';
+const height = variant === 'hero' ? 'h-16 md:h-24' : 'h-8';
+---
+
+<div class:list={['skyline-wrap w-full flex justify-center', height, className]} aria-hidden="true">
+  <svg
+    class:list={['skyline w-full max-w-4xl', variant === 'hero' && 'skyline-hero']}
+    viewBox="0 0 800 60"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    stroke={stroke}
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="
+      M0,50 L120,50
+      L150,50 L150,30 L165,30 L165,50
+      L180,50 L180,26 L195,26 L195,50
+      L230,50
+      L245,50 L250,42 Q260,20 270,42 L275,50
+      L310,50
+      L325,50 L340,20 L355,50
+      L370,50
+      L395,50 Q400,50 400,42 L400,10 L400,42 Q400,50 405,50
+      L430,50
+      L445,50 L450,32 A18,18 0 0 1 480,32 L485,50
+      L520,50
+      L540,50 L540,22 L555,22 L555,50
+      L570,50 L570,26 L585,26 L585,50
+      L620,50
+      L640,50 L660,36 L680,50
+      L720,50
+      L740,50 L750,42 Q760,26 770,42 L780,50
+      L800,50
+    "></path>
+  </svg>
+</div>
+
+<style>
+  .skyline-hero {
+    stroke-dasharray: 2400;
+    stroke-dashoffset: 2400;
+    animation: skyline-draw 2.4s ease-out 0.3s forwards;
+  }
+
+  @keyframes skyline-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skyline-hero {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+  }
+</style>

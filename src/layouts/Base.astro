@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import type { Lang } from '../i18n/ui';
+import { routes } from '../i18n/ui';
+import { WHATSAPP_NUMBER } from '../data/whatsapp';
+
+export interface Props {
+  lang: Lang;
+  page: keyof typeof routes.pt;
+  title: string;
+  description: string;
+  ogImage?: string;
+  schemaExtras?: unknown[];
+}
+
+const {
+  lang,
+  page,
+  title,
+  description,
+  ogImage = '/og-default.jpg',
+  schemaExtras = []
+} = Astro.props;
+
+const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://brasiliaexecutive.com.br';
+
+const currentPathPt = routes.pt[page];
+const currentPathEn = routes.en[page];
+const canonical = `${siteUrl}${lang === 'pt' ? currentPathPt : currentPathEn}`;
+const altPt = `${siteUrl}${currentPathPt}`;
+const altEn = `${siteUrl}${currentPathEn}`;
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Brasília Executive',
+  description:
+    'Transporte executivo em Brasília: transfer aeroporto, diárias com motorista e atendimento bilíngue.',
+  url: siteUrl,
+  telephone: `+55${WHATSAPP_NUMBER}`,
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Brasília',
+    addressRegion: 'DF',
+    addressCountry: 'BR'
+  },
+  openingHours: 'Mo-Su 00:00-24:00',
+  priceRange: '$$$',
+  knowsLanguage: ['pt-BR', 'en']
+};
+
+const allSchema = [localBusiness, ...schemaExtras];
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#16181D" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="alternate" hreflang="pt-BR" href={altPt} />
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="x-default" href={altPt} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Brasília Executive" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:locale" content={lang === 'pt' ? 'pt_BR' : 'en_US'} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Marcellus&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Marcellus&display=swap"
+    />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(allSchema)}
+    />
+  </head>
+  <body>
+    <Header lang={lang} page={page} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <WhatsAppButton lang={lang} />
+  </body>
+</html>

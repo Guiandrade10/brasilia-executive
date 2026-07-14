@@ -1,0 +1,78 @@
+---
+export interface Props {
+  title: string;
+  columns: [string, string];
+  rows: [string, string][];
+  note?: string;
+}
+const { title, columns, rows, note } = Astro.props;
+---
+
+<section class="pt">
+  <div class="wrap">
+    <h2>{title}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>{columns[0]}</th>
+            <th>{columns[1]}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <td>{r[0]}</td>
+              <td class="tabular">{r[1]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    {note && <p class="note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .pt {
+    padding: 3.5rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.98rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  th:last-child, td:last-child { text-align: right; }
+  thead th {
+    font-family: var(--font-display);
+    color: var(--brass);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  tbody td { color: var(--graphite); }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
+  .note {
+    font-size: 0.85rem;
+    color: var(--graphite);
+    opacity: 0.75;
+    max-width: 62ch;
+  }
+</style>

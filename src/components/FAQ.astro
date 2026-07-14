@@ -1,0 +1,77 @@
+---
+export interface Props {
+  title: string;
+  items: { q: string; a: string }[];
+}
+const { title, items } = Astro.props;
+---
+
+<section class="faq" aria-label={title}>
+  <div class="wrap">
+    <h2>{title}</h2>
+    <ul>
+      {items.map((it) => (
+        <li>
+          <details>
+            <summary>
+              <span>{it.q}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </summary>
+            <p>{it.a}</p>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding: 4.5rem 1.25rem;
+    background: var(--paper);
+  }
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+  }
+  ul {
+    display: grid;
+    gap: 0;
+    margin-top: 1rem;
+  }
+  li {
+    border-top: 1px solid var(--line);
+  }
+  li:last-child { border-bottom: 1px solid var(--line); }
+  summary {
+    padding: 1.2rem 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary svg {
+    color: var(--brass);
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+  }
+  details[open] summary svg { transform: rotate(180deg); }
+  details p {
+    padding: 0 0 1.4rem;
+    color: var(--graphite);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    max-width: 60ch;
+  }
+</style>

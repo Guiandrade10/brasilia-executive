@@ -1,0 +1,140 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PriceTable from '../../components/PriceTable.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import OtherServices from '../../components/OtherServices.astro';
+import { images } from '../../data/images';
+
+const lang = 'en' as const;
+
+const title = 'Executive Chauffeur in Brasília | Half and Full Day Hire | Brasília Executive';
+const description =
+  'Executive chauffeur at your disposal in Brasília for a half or full day. Fixed price, black executive sedan and full English support.';
+
+const priceRows: [string, string][] = [
+  ['Half day (up to 6 hours)', 'from R$ 600'],
+  ['Full executive day (up to 10 hours)', 'from R$ 950'],
+  ['Additional hour', 'R$ 100']
+];
+
+const steps = [
+  {
+    title: 'Send your schedule on WhatsApp',
+    body: 'Date, pickup point and planned agenda.'
+  },
+  {
+    title: 'We confirm a fixed price',
+    body: 'Half day or full day, with no surprises.'
+  },
+  {
+    title: 'Your chauffeur is on standby',
+    body: 'One car and one point of contact for the entire day.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Can I change the schedule during the day?',
+    a: 'Yes. The daily hire is yours to use within the contracted period. Changes are handled in real time with your chauffeur.'
+  },
+  {
+    q: 'Does the daily rate include waiting between stops?',
+    a: 'Yes. The chauffeur waits between meetings and agenda points at no extra cost within the period.'
+  },
+  {
+    q: 'Do you serve embassies and government bodies?',
+    a: 'Yes. We work with embassies, ministries and delegations with monthly invoicing and dedicated chauffeurs on request.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Executive chauffeur (daily hire)',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Executive Chauffeur Daily Hire',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/en/' },
+    { '@type': 'ListItem', position: 2, name: 'Executive Chauffeur', item: 'https://brasiliaexecutive.com.br/en/executive-chauffeur-daily' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="daily"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="EXECUTIVE CHAUFFEUR"
+    headline="An executive chauffeur at your disposal, by half day or full day"
+    intro="One car and one point of contact for your whole Brasília schedule: meetings on the Esplanada, lunches, embassies and the airport return. The chauffeur waits between stops."
+    bgImage={images.daily.src}
+    bgAlt={images.daily.alt[lang]}
+  />
+
+  <PriceTable
+    title="Reference rates"
+    columns={['Period', 'Price']}
+    rows={priceRows}
+    note="Reference rates. The fixed price is confirmed at booking based on your itinerary."
+  />
+
+  <section class="corp">
+    <div class="wrap">
+      <p class="eyebrow">FOR COMPANIES AND EMBASSIES</p>
+      <h2>Monthly invoicing, dedicated chauffeurs, corporate rates.</h2>
+      <p>Recurring schedules deserve predictability. We offer monthly invoicing, a dedicated chauffeur per account and corporate rates on request.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="BOOKING" title="How to book" steps={steps} />
+
+  <FAQ title="Frequently asked questions" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="daily"
+    headline="Send us your itinerary and receive a fixed quote."
+  />
+
+  <OtherServices lang={lang} currentKey="daily" title="OTHER SERVICES" />
+</Base>
+
+<style>
+  .corp {
+    padding: 4rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .corp .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .corp h2 { max-width: 24ch; }
+  .corp p { max-width: 60ch; color: var(--graphite); }
+</style>

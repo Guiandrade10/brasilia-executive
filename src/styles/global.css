@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #16181D;
+  --color-paper: #F7F5F1;
+  --color-graphite: #3A3E46;
+  --color-brass: #A8853B;
+  --color-line: #D8D4CC;
+  --color-line-dark: #2A2D34;
+
+  --font-display: "Marcellus", ui-serif, Georgia, serif;
+  --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --ink: #16181D;
+  --paper: #F7F5F1;
+  --graphite: #3A3E46;
+  --brass: #A8853B;
+  --line: #D8D4CC;
+  --line-dark: #2A2D34;
+}
+
+html {
+  background: var(--paper);
+  color: var(--graphite);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+  color: var(--brass);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 2px;
+  font-weight: 500;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-primary:hover {
+  background: #000;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--brass);
+}
+
+.btn-ghost-dark {
+  background: transparent;
+  color: var(--paper);
+  border-color: var(--line-dark);
+}
+
+.btn-ghost-dark:hover {
+  border-color: var(--brass);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

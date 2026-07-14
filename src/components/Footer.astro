@@ -1,0 +1,110 @@
+---
+import type { Lang } from '../i18n/ui';
+import { t, routes } from '../i18n/ui';
+import { EMAIL, PHONE_DISPLAY, INSTAGRAM_URL, CNPJ } from '../data/whatsapp';
+
+export interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const r = routes[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="brass-line" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="col brand-col">
+      <p class="brand-mark">BRASÍLIA EXECUTIVE</p>
+      <p class="tag">{t(lang, 'footer.brand.tag')}</p>
+    </div>
+    <div class="col">
+      <p class="col-title">{t(lang, 'footer.services')}</p>
+      <ul>
+        <li><a href={r.transfer}>{t(lang, 'nav.transfer')}</a></li>
+        <li><a href={r.daily}>{t(lang, 'nav.daily')}</a></li>
+        <li><a href={r.wedding}>{t(lang, 'nav.wedding')}</a></li>
+        <li><a href={r.escort}>{t(lang, 'nav.escort')}</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <p class="col-title">{t(lang, 'footer.contact')}</p>
+      <ul>
+        <li><span class="label">{t(lang, 'footer.phone')}:</span> {PHONE_DISPLAY}</li>
+        <li><span class="label">{t(lang, 'footer.email')}:</span> {EMAIL}</li>
+        <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener">{t(lang, 'footer.instagram')}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom">
+    <p>© {year} Brasília Executive. {t(lang, 'footer.rights')}</p>
+    <p class="cnpj">CNPJ: {CNPJ}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: var(--paper);
+    margin-top: 5rem;
+  }
+  .brass-line {
+    height: 1px;
+    background: var(--brass);
+    opacity: 0.7;
+  }
+  .wrap {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.25rem 2rem;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) {
+    .wrap { grid-template-columns: 1.4fr 1fr 1fr; }
+  }
+  .brand-mark {
+    font-family: var(--font-display);
+    letter-spacing: 0.14em;
+  }
+  .tag {
+    color: var(--brass);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    margin-top: 0.4rem;
+  }
+  .col-title {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.9rem;
+  }
+  .col ul {
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.925rem;
+  }
+  .col a {
+    color: var(--paper);
+    opacity: 0.85;
+    transition: opacity 150ms ease, color 150ms ease;
+  }
+  .col a:hover { opacity: 1; color: var(--brass); }
+  .label { color: var(--brass); opacity: 0.85; }
+  .bottom {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+    border-top: 1px solid var(--line-dark);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    color: var(--paper);
+    opacity: 0.6;
+  }
+</style>

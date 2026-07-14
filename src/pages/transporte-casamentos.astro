@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import IncludedList from '../components/IncludedList.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import OtherServices from '../components/OtherServices.astro';
+import { images } from '../data/images';
+
+const lang = 'pt' as const;
+
+const title = 'Carro Executivo para Casamento em Brasília | Brasília Executive';
+const description =
+  'Carro do casal, transfers de convidados e chegada coordenada com o cerimonial. Motoristas de terno e horários cumpridos no minuto.';
+
+const includedItems = [
+  'Carro do casal com motorista de terno',
+  'Transfers de padrinhos e convidados VIP',
+  'Coordenação de horários com o cerimonial',
+  'Carro impecável e pontualidade absoluta',
+  'Rotas planejadas antecipadamente'
+];
+
+const steps = [
+  {
+    title: 'Conte a data e o local',
+    body: 'Cerimônia, recepção e onde entram os convidados.'
+  },
+  {
+    title: 'Montamos o projeto do dia',
+    body: 'Número de carros, horários e responsáveis.'
+  },
+  {
+    title: 'No dia, você não precisa conferir',
+    body: 'Motoristas de terno e tempo coordenado com o cerimonial.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Vocês fazem decoração do carro?',
+    a: 'Coordenamos com sua decoradora ou cerimonialista. Cuidamos do carro e do motorista, os detalhes de decoração podem ser combinados à parte.'
+  },
+  {
+    q: 'Fazem transporte para o ensaio?',
+    a: 'Sim. Podemos incluir o carro do ensaio no mesmo projeto, com valor diferenciado.'
+  },
+  {
+    q: 'Quantos carros conseguem para o cortejo?',
+    a: 'Trabalhamos com uma rede de motoristas parceiros no mesmo padrão. Dimensionamos conforme a agenda e o número de convidados.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Wedding transportation',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Transporte para Casamentos',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/' },
+    { '@type': 'ListItem', position: 2, name: 'Casamentos', item: 'https://brasiliaexecutive.com.br/transporte-casamentos' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="wedding"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="CASAMENTOS E EVENTOS"
+    headline="Transporte executivo para o seu casamento"
+    intro="Carro do casal, transfers de padrinhos e convidados, e chegada coordenada com o cerimonial. Motoristas de terno, carro preparado e horários cumpridos no minuto."
+    bgImage={images.wedding.src}
+    bgAlt={images.wedding.alt[lang]}
+  />
+
+  <IncludedList title="O que está incluso" items={includedItems} />
+
+  <section class="values">
+    <div class="wrap">
+      <p class="eyebrow">VALORES</p>
+      <h2>Sob consulta.</h2>
+      <p>Cada casamento tem logística própria. Projetos <span class="tabular">a partir de R$ 900</span>, orçado após conversa com o cerimonial.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="RESERVA" title="Como reservar" steps={steps} />
+
+  <FAQ title="Perguntas frequentes" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="wedding"
+    headline="Conte a data do casamento e receba a proposta."
+  />
+
+  <OtherServices lang={lang} currentKey="wedding" title="OUTROS SERVIÇOS" />
+</Base>
+
+<style>
+  .values {
+    padding: 3.5rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .values .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .values p { max-width: 60ch; color: var(--graphite); }
+</style>

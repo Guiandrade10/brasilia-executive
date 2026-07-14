@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import IncludedList from '../components/IncludedList.astro';
+import PriceTable from '../components/PriceTable.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import OtherServices from '../components/OtherServices.astro';
+import { images } from '../data/images';
+
+const lang = 'pt' as const;
+
+const title = 'Transfer Aeroporto Brasília (BSB) | Preço Fechado | Brasília Executive';
+const description =
+  'Transfer executivo no Aeroporto de Brasília com monitoramento de voo, placa de identificação e sedã executivo preto. Preço fechado antes do embarque.';
+
+const includedItems = [
+  'Monitoramento de voo em tempo real',
+  '60 minutos de espera cortesia no desembarque',
+  'Água a bordo',
+  'Motorista de terno com placa de identificação',
+  'Ajuda com bagagem no desembarque'
+];
+
+const priceRows: [string, string][] = [
+  ['Aeroporto ↔ Plano Piloto (hotéis e Esplanada)', 'a partir de R$ 220'],
+  ['Aeroporto ↔ Lago Sul / Lago Norte', 'a partir de R$ 250'],
+  ['Recepção com placa + espera estendida', 'a partir de R$ 320']
+];
+
+const steps = [
+  {
+    title: 'Envie o voo pelo WhatsApp',
+    body: 'Número do voo, horário e destino em Brasília.'
+  },
+  {
+    title: 'Confirmamos o valor fechado',
+    body: 'O preço não muda com trânsito ou atraso de voo.'
+  },
+  {
+    title: 'Recepção no desembarque',
+    body: 'Motorista de terno com placa de identificação.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'E se o meu voo atrasar?',
+    a: 'Monitoramos o voo em tempo real e ajustamos a recepção sem custo extra. Nas primeiras 60 minutos após o pouso, a espera é cortesia.'
+  },
+  {
+    q: 'Como funciona a recepção com placa?',
+    a: 'O motorista aguarda no desembarque com uma placa com o nome que você indicar. Ideal para hóspedes VIP e delegações.'
+  },
+  {
+    q: 'Vocês atendem voos de madrugada?',
+    a: 'Sim, 24 horas, com reserva antecipada pelo WhatsApp.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Airport transfer',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Transfer Aeroporto Brasília',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/' },
+    { '@type': 'ListItem', position: 2, name: 'Transfer Aeroporto', item: 'https://brasiliaexecutive.com.br/transfer-aeroporto-brasilia' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="transfer"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="TRANSFER AEROPORTO BSB"
+    headline="Transfer executivo no Aeroporto de Brasília"
+    intro="Recepção no desembarque com placa de identificação, monitoramento do voo em tempo real e sedã executivo preto aguardando. Valor confirmado antes do embarque, sem tarifa dinâmica."
+    bgImage={images.transfer.src}
+    bgAlt={images.transfer.alt[lang]}
+  />
+
+  <IncludedList title="O que está incluso" items={includedItems} />
+
+  <PriceTable
+    title="Valores de referência"
+    columns={['Trajeto', 'Valor']}
+    rows={priceRows}
+    note="Valores de referência. O preço fechado é confirmado na reserva, conforme horário e trajeto."
+  />
+
+  <HowItWorks
+    eyebrow="RESERVA"
+    title="Como reservar"
+    steps={steps}
+  />
+
+  <FAQ title="Perguntas frequentes" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="transfer"
+    headline="Envie o número do voo e receba o valor fechado."
+  />
+
+  <OtherServices lang={lang} currentKey="transfer" title="OUTROS SERVIÇOS" />
+</Base>

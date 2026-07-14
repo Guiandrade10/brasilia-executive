@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Differentials from '../components/Differentials.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import AntiApp from '../components/AntiApp.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { services } from '../data/services';
+import { faqHome } from '../data/faq';
+import { images } from '../data/images';
+
+const lang = 'pt' as const;
+
+const title = 'Transporte Executivo em Brasília | Transfer Aeroporto e Diárias | Brasília Executive';
+const description =
+  'Sedãs executivos pretos, motoristas de terno, preço fechado e atendimento em inglês. Transfer aeroporto, diárias e casamentos, reservados no WhatsApp.';
+
+const differentials = [
+  'Preço fechado, sem surpresa',
+  'Monitoramento de voo',
+  'Motoristas verificados',
+  'Atendimento em inglês'
+];
+
+const howSteps = [
+  {
+    title: 'Você chama no WhatsApp',
+    body: 'Informa data, horário, origem e destino.'
+  },
+  {
+    title: 'Confirmamos valor fechado',
+    body: 'Sem tarifa dinâmica, sem custo escondido.'
+  },
+  {
+    title: 'Motorista de terno no local',
+    body: 'Antes do horário, com o carro preparado.'
+  }
+];
+
+const testimonials = [
+  {
+    quote: 'Três anos de agenda em Brasília sem um único atraso.',
+    attribution: 'Diretor de multinacional, São Paulo'
+  },
+  {
+    quote: 'É o contato que passo para toda delegação que recebemos.',
+    attribution: 'Assessoria de embaixada'
+  },
+  {
+    quote: 'No dia do casamento, foi a única parte da logística que não precisei conferir.',
+    attribution: 'Noiva, Lago Sul'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqHome.map((it) => ({
+    '@type': 'Question',
+    name: it.q[lang],
+    acceptedAnswer: { '@type': 'Answer', text: it.a[lang] }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="home"
+  title={title}
+  description={description}
+  schemaExtras={[faqSchema]}
+>
+  <Hero
+    lang={lang}
+    eyebrow="TRANSPORTE EXECUTIVO EM BRASÍLIA"
+    headline="Chegue com pontualidade e discrição aos compromissos que importam."
+    sub="Sedãs executivos pretos, motoristas de terno e preço fechado antes do embarque. Transfers de aeroporto, diárias e atendimento em inglês, com reserva direta pelo WhatsApp."
+    bgImage={images.home.src}
+    bgAlt={images.home.alt[lang]}
+  />
+
+  <Differentials items={differentials} />
+
+  <section id="servicos" class="services">
+    <div class="wrap">
+      <p class="eyebrow">SERVIÇOS</p>
+      <h2>Quatro serviços, um único padrão.</h2>
+      <div class="grid">
+        {services.map((s) => (
+          <ServiceCard
+            title={s.title[lang]}
+            body={s.card[lang]}
+            href={s.href[lang]}
+            ctaLabel="Ver detalhes"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <HowItWorks
+    eyebrow="COMO FUNCIONA"
+    title="Três passos, sem aplicativo."
+    steps={howSteps}
+  />
+
+  <AntiApp
+    title="O que um aplicativo não garante."
+    body="Tarifa dinâmica, motorista sorteado e cancelamento em cima da hora não combinam com uma audiência às 9h ou com um voo às 6h. Aqui você fala com quem dirige, confirma o valor antes e tem o mesmo padrão em todas as corridas."
+  />
+
+  <Testimonials
+    title="Discrição também é não citar nomes."
+    items={testimonials}
+  />
+
+  <FAQ
+    title="Perguntas frequentes"
+    items={faqHome.map((it) => ({ q: it.q[lang], a: it.a[lang] }))}
+  />
+
+  <FinalCTA
+    lang={lang}
+    headline="Sua próxima agenda em Brasília, resolvida em uma mensagem."
+  />
+</Base>
+
+<style>
+  .services {
+    padding: 4.5rem 1.25rem;
+    background: var(--paper);
+  }
+  .services .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+  .services h2 {
+    max-width: 26ch;
+  }
+  .grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

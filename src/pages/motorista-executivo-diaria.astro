@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import PriceTable from '../components/PriceTable.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import OtherServices from '../components/OtherServices.astro';
+import { images } from '../data/images';
+
+const lang = 'pt' as const;
+
+const title = 'Motorista Executivo em Brasília | Diária e Meia Diária | Brasília Executive';
+const description =
+  'Motorista executivo à disposição em Brasília por meia diária ou diária completa. Preço fechado, sedã executivo preto e atendimento em inglês.';
+
+const priceRows: [string, string][] = [
+  ['Meia diária (até 6 horas)', 'a partir de R$ 600'],
+  ['Diária executiva (até 10 horas)', 'a partir de R$ 950'],
+  ['Hora adicional', 'R$ 100']
+];
+
+const steps = [
+  {
+    title: 'Envie o roteiro no WhatsApp',
+    body: 'Data, ponto de partida e agenda prevista.'
+  },
+  {
+    title: 'Recebemos o valor fechado',
+    body: 'Meia diária ou diária, sem surpresa.'
+  },
+  {
+    title: 'Motorista à disposição',
+    body: 'Um único carro e um único contato para o dia todo.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Posso mudar o roteiro no meio do dia?',
+    a: 'Sim. A diária é para você usar como precisar dentro do período contratado. Alterações são combinadas em tempo real com o motorista.'
+  },
+  {
+    q: 'A diária inclui espera entre compromissos?',
+    a: 'Sim. O motorista aguarda entre reuniões e pontos de agenda sem cobrança adicional dentro do período.'
+  },
+  {
+    q: 'Vocês atendem embaixadas e órgãos de governo?',
+    a: 'Sim. Trabalhamos com embaixadas, ministérios e delegações, com faturamento mensal e motoristas fixos sob acordo.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Executive chauffeur (daily hire)',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Motorista Executivo Diária',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/' },
+    { '@type': 'ListItem', position: 2, name: 'Diárias Executivas', item: 'https://brasiliaexecutive.com.br/motorista-executivo-diaria' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="daily"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="MOTORISTA EXECUTIVO"
+    headline="Motorista executivo à disposição, por período ou dia completo"
+    intro="Um único carro e um único contato para toda a sua agenda em Brasília: reuniões na Esplanada, almoços, embaixadas e retorno ao aeroporto. O motorista aguarda entre os compromissos."
+    bgImage={images.daily.src}
+    bgAlt={images.daily.alt[lang]}
+  />
+
+  <PriceTable
+    title="Valores de referência"
+    columns={['Período', 'Valor']}
+    rows={priceRows}
+    note="Valores de referência. O preço fechado é confirmado na reserva conforme roteiro."
+  />
+
+  <section class="corp">
+    <div class="wrap">
+      <p class="eyebrow">PARA EMPRESAS E EMBAIXADAS</p>
+      <h2>Faturamento mensal, motoristas fixos, tabela corporativa.</h2>
+      <p>Estruturas de agenda recorrente merecem previsibilidade. Trabalhamos com faturamento mensal, um motorista de referência por conta e tabela corporativa sob acordo.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="RESERVA" title="Como reservar" steps={steps} />
+
+  <FAQ title="Perguntas frequentes" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="daily"
+    headline="Envie o roteiro do dia e receba o valor fechado."
+  />
+
+  <OtherServices lang={lang} currentKey="daily" title="OUTROS SERVIÇOS" />
+</Base>
+
+<style>
+  .corp {
+    padding: 4rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .corp .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .corp h2 { max-width: 24ch; }
+  .corp p { max-width: 60ch; color: var(--graphite); }
+</style>

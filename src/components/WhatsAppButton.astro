@@ -1,0 +1,56 @@
+---
+import { whatsappLink } from '../data/whatsapp';
+import type { Lang } from '../i18n/ui';
+
+export interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const href = whatsappLink('global', lang);
+const label = lang === 'pt' ? 'Abrir WhatsApp' : 'Open WhatsApp';
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  aria-label={label}
+  class="wa-float"
+  data-analytics={`whatsapp_float_${lang}`}
+>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.5 3.5A11 11 0 0 0 3.7 17.3L2.5 22l4.8-1.3A11 11 0 1 0 20.5 3.5Z"/>
+    <path d="M8.5 8.5c.3 3 2.5 6 5.5 6.5.6.1 1.3-.1 1.7-.5l.9-.9c.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1-.9.9-2 1.4-3.3 1.2-3.8-.5-7-3.7-7.5-7.5-.2-1.3.3-2.4 1.2-3.3.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1l-.9.9c-.4.4-.6 1.1-.5 1.7Z"/>
+  </svg>
+</a>
+
+<style>
+  .wa-float {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 60;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--brass);
+    border-radius: 999px;
+    transition: transform 150ms ease, border-color 150ms ease;
+  }
+
+  .wa-float:hover {
+    transform: translateY(-2px);
+    border-color: var(--paper);
+  }
+
+  @media (min-width: 768px) {
+    .wa-float {
+      right: 1.75rem;
+      bottom: 1.75rem;
+    }
+  }
+</style>

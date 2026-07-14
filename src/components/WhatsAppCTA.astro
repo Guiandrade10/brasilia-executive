@@ -1,0 +1,39 @@
+---
+import { whatsappLink, type WhatsContext } from '../data/whatsapp';
+import type { Lang } from '../i18n/ui';
+
+export interface Props {
+  context?: WhatsContext;
+  lang: Lang;
+  label: string;
+  variant?: 'primary' | 'ghost' | 'ghost-dark';
+  class?: string;
+  analytics?: string;
+}
+
+const {
+  context = 'global',
+  lang,
+  label,
+  variant = 'primary',
+  class: className = '',
+  analytics
+} = Astro.props;
+
+const href = whatsappLink(context, lang);
+const btnClass = variant === 'primary' ? 'btn btn-primary' : variant === 'ghost' ? 'btn btn-ghost' : 'btn btn-ghost-dark';
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  class:list={[btnClass, className]}
+  data-analytics={analytics ?? `whatsapp_${context}_${lang}`}
+>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.5 3.5A11 11 0 0 0 3.7 17.3L2.5 22l4.8-1.3A11 11 0 1 0 20.5 3.5Z"/>
+    <path d="M8.5 8.5c.3 3 2.5 6 5.5 6.5.6.1 1.3-.1 1.7-.5l.9-.9c.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1-.9.9-2 1.4-3.3 1.2-3.8-.5-7-3.7-7.5-7.5-.2-1.3.3-2.4 1.2-3.3.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1l-.9.9c-.4.4-.6 1.1-.5 1.7Z"/>
+  </svg>
+  <span>{label}</span>
+</a>

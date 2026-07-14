@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import OtherServices from '../../components/OtherServices.astro';
+import { images } from '../../data/images';
+
+const lang = 'en' as const;
+
+const title = 'Secure Transportation with Armed Escort in Brasília | Brasília Executive';
+const description =
+  'Executive transportation with armed escort in Brasília. The armed escort is provided by a partner security firm licensed by the Brazilian Federal Police.';
+
+const steps = [
+  {
+    title: 'Agenda assessment',
+    body: 'We review the profile of the journey, route and the level of reinforcement required.'
+  },
+  {
+    title: 'Planning with the licensed partner',
+    body: 'The partner security firm, licensed by the Brazilian Federal Police, plans the operation with us.'
+  },
+  {
+    title: 'Coordinated execution',
+    body: 'Executive chauffeur and escort team work in sync throughout the journey.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Do you operate the armed escort in-house?',
+    a: 'No. The armed escort is operated by a partner private security firm licensed by the Brazilian Federal Police. Brasília Executive coordinates the transportation logistics and the chauffeur.'
+  },
+  {
+    q: 'Do you serve heads of state or international executives?',
+    a: 'Yes, with absolute discretion. Each operation is scoped with the security partner based on the profile.'
+  },
+  {
+    q: 'How does pricing work?',
+    a: 'Exclusively on request, after understanding the profile, schedule and route.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Executive transportation with armed escort',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Secure Transportation',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/en/' },
+    { '@type': 'ListItem', position: 2, name: 'Secure Transportation', item: 'https://brasiliaexecutive.com.br/en/secure-transportation' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="escort"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="SECURE TRANSPORTATION"
+    headline="Executive transportation with armed escort"
+    intro="For schedules and profiles that require added security. The armed escort is provided by a partner private security firm licensed by the Brazilian Federal Police, with logistics coordinated end-to-end with your journey."
+    bgImage={images.escort.src}
+    bgAlt={images.escort.alt[lang]}
+  />
+
+  <section class="compliance">
+    <div class="wrap">
+      <p class="eyebrow">HOW WE WORK</p>
+      <h2>Logistics coordination. Escort operated by a licensed partner.</h2>
+      <p>Brasília Executive coordinates the executive journey. When required, the armed escort is provided by a partner private security firm licensed by the Brazilian Federal Police. Every operation is scoped jointly and communicated to the client in advance.</p>
+      <p>Pricing is exclusively on request. We do not publish a rate table for this service.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="PROCESS" title="How we structure the operation" steps={steps} />
+
+  <FAQ title="Frequently asked questions" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="escort"
+    headline="Message us to scope the operation."
+  />
+
+  <OtherServices lang={lang} currentKey="escort" title="OTHER SERVICES" />
+</Base>
+
+<style>
+  .compliance {
+    padding: 4rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .compliance .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .compliance h2 { max-width: 32ch; }
+  .compliance p { max-width: 62ch; color: var(--graphite); }
+</style>

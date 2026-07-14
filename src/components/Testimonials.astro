@@ -1,0 +1,64 @@
+---
+export interface Props {
+  title: string;
+  items: { quote: string; attribution: string }[];
+}
+const { title, items } = Astro.props;
+---
+
+<section class="tst" aria-label={title}>
+  <div class="wrap">
+    <h2>{title}</h2>
+    <div class="grid">
+      {items.map((it) => (
+        <figure>
+          <blockquote>“{it.quote}”</blockquote>
+          <figcaption>{it.attribution}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tst {
+    padding: 4.5rem 1.25rem;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+  h2 { max-width: 26ch; }
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  figure {
+    padding: 1.75rem 1.5rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    display: grid;
+    gap: 1rem;
+  }
+  blockquote {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--graphite);
+    opacity: 0.8;
+    letter-spacing: 0.02em;
+  }
+</style>

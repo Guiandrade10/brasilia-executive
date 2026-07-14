@@ -1,0 +1,136 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import IncludedList from '../../components/IncludedList.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import OtherServices from '../../components/OtherServices.astro';
+import { images } from '../../data/images';
+
+const lang = 'en' as const;
+
+const title = 'Wedding Executive Car in Brasília | Brasília Executive';
+const description =
+  'Bridal car, guest transfers and arrival logistics in sync with your wedding planner. Suited chauffeurs and on-the-minute timing.';
+
+const includedItems = [
+  'Bridal car with a suited chauffeur',
+  'Groomsmen and VIP guest transfers',
+  'Timing coordinated with your wedding planner',
+  'Immaculate car, absolute punctuality',
+  'Routes planned in advance'
+];
+
+const steps = [
+  {
+    title: 'Share the date and venues',
+    body: 'Ceremony, reception and the guest pickup points.'
+  },
+  {
+    title: 'We design the day plan',
+    body: 'Number of cars, timings and responsibilities.'
+  },
+  {
+    title: "You don't need to double-check on the day",
+    body: 'Suited chauffeurs and timing aligned with your planner.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Do you decorate the car?',
+    a: 'We coordinate with your decorator or planner. We take care of the car and chauffeur; decoration details are handled separately.'
+  },
+  {
+    q: 'Can you drive us to the rehearsal?',
+    a: 'Yes. We can include the rehearsal car in the same project at a special rate.'
+  },
+  {
+    q: 'How many cars can you provide?',
+    a: 'We work with a network of partner chauffeurs at the same standard. We scale to the schedule and guest count.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Wedding transportation',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Wedding Transportation',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/en/' },
+    { '@type': 'ListItem', position: 2, name: 'Weddings', item: 'https://brasiliaexecutive.com.br/en/wedding-transportation' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="wedding"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="WEDDINGS AND EVENTS"
+    headline="Executive transportation for your wedding"
+    intro="Bridal car, groomsmen and guest transfers, and arrival logistics coordinated with your wedding planner. Suited chauffeurs, a spotless car and on-the-minute timing."
+    bgImage={images.wedding.src}
+    bgAlt={images.wedding.alt[lang]}
+  />
+
+  <IncludedList title="What's included" items={includedItems} />
+
+  <section class="values">
+    <div class="wrap">
+      <p class="eyebrow">PRICING</p>
+      <h2>On request.</h2>
+      <p>Every wedding has its own logistics. Projects <span class="tabular">from R$ 900</span>, quoted after a conversation with your planner.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="BOOKING" title="How to book" steps={steps} />
+
+  <FAQ title="Frequently asked questions" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="wedding"
+    headline="Send us your wedding date and receive a proposal."
+  />
+
+  <OtherServices lang={lang} currentKey="wedding" title="OTHER SERVICES" />
+</Base>
+
+<style>
+  .values {
+    padding: 3.5rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .values .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .values p { max-width: 60ch; color: var(--graphite); }
+</style>

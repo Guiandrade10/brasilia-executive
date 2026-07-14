@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import OtherServices from '../components/OtherServices.astro';
+import { images } from '../data/images';
+
+const lang = 'pt' as const;
+
+const title = 'Transporte com Escolta Armada em Brasília | Brasília Executive';
+const description =
+  'Transporte executivo com escolta armada em Brasília. A escolta é executada por empresa de segurança parceira, credenciada pela Polícia Federal.';
+
+const steps = [
+  {
+    title: 'Avaliação da agenda',
+    body: 'Conversamos sobre o perfil do deslocamento, rota e nível de reforço necessário.'
+  },
+  {
+    title: 'Planejamento com a parceira credenciada',
+    body: 'A empresa de segurança parceira, credenciada pela Polícia Federal, planeja a operação em conjunto.'
+  },
+  {
+    title: 'Execução integrada',
+    body: 'Motorista executivo e equipe de escolta trabalham em sincronia durante todo o trajeto.'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'A escolta armada é executada por vocês?',
+    a: 'Não. A escolta é executada por empresa de segurança privada parceira, credenciada pela Polícia Federal. A Brasília Executive coordena a logística do deslocamento e o motorista.'
+  },
+  {
+    q: 'Vocês atendem chefes de Estado ou executivos internacionais?',
+    a: 'Sim, com discrição absoluta. Cada operação é dimensionada com a parceira de segurança conforme o perfil.'
+  },
+  {
+    q: 'Como funciona o orçamento?',
+    a: 'Exclusivamente sob consulta, após entendimento do perfil, agenda e rota.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Executive transportation with armed escort',
+  provider: { '@type': 'LocalBusiness', name: 'Brasília Executive' },
+  areaServed: { '@type': 'City', name: 'Brasília' },
+  name: 'Transporte com Escolta',
+  description
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://brasiliaexecutive.com.br/' },
+    { '@type': 'ListItem', position: 2, name: 'Escolta', item: 'https://brasiliaexecutive.com.br/transporte-com-escolta' }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="escort"
+  title={title}
+  description={description}
+  schemaExtras={[serviceSchema, breadcrumb, faqSchema]}
+>
+  <PageHero
+    eyebrow="TRANSPORTE COM ESCOLTA"
+    headline="Transporte executivo com escolta armada"
+    intro="Para agendas e perfis que exigem segurança reforçada. A escolta armada é executada por empresa de segurança privada parceira, credenciada pela Polícia Federal, com coordenação de logística integrada ao seu deslocamento."
+    bgImage={images.escort.src}
+    bgAlt={images.escort.alt[lang]}
+  />
+
+  <section class="compliance">
+    <div class="wrap">
+      <p class="eyebrow">COMO ATUAMOS</p>
+      <h2>Coordenação de logística. Escolta executada por parceira credenciada.</h2>
+      <p>A Brasília Executive coordena o deslocamento executivo. A escolta armada, quando aplicável, é executada por empresa de segurança privada parceira, credenciada pela Polícia Federal. Toda operação é dimensionada em conjunto e comunicada com antecedência ao cliente.</p>
+      <p>Valores exclusivamente sob consulta. Não trabalhamos com tabela pública para essa modalidade.</p>
+    </div>
+  </section>
+
+  <HowItWorks eyebrow="PROCESSO" title="Como estruturamos a operação" steps={steps} />
+
+  <FAQ title="Perguntas frequentes" items={faqItems} />
+
+  <FinalCTA
+    lang={lang}
+    context="escort"
+    headline="Fale com a gente para avaliar a operação."
+  />
+
+  <OtherServices lang={lang} currentKey="escort" title="OUTROS SERVIÇOS" />
+</Base>
+
+<style>
+  .compliance {
+    padding: 4rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .compliance .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  .compliance h2 { max-width: 32ch; }
+  .compliance p { max-width: 62ch; color: var(--graphite); }
+</style>

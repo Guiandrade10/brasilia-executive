@@ -1,0 +1,64 @@
+---
+import type { Lang } from '../i18n/ui';
+import { services } from '../data/services';
+
+export interface Props {
+  lang: Lang;
+  currentKey: 'transfer' | 'daily' | 'wedding' | 'escort';
+  title: string;
+}
+const { lang, currentKey, title } = Astro.props;
+const others = services.filter((s) => s.key !== currentKey);
+---
+
+<section class="other">
+  <div class="wrap">
+    <p class="eyebrow">{title}</p>
+    <ul>
+      {others.map((s) => (
+        <li>
+          <a href={s.href[lang]}>
+            <span class="t">{s.title[lang]}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14" />
+              <path d="M13 5l7 7-7 7" />
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .other {
+    background: var(--paper);
+    padding: 3rem 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+  ul {
+    display: grid;
+    gap: 0;
+  }
+  li { border-top: 1px solid var(--line); }
+  li:last-child { border-bottom: 1px solid var(--line); }
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 0;
+    color: var(--ink);
+    transition: color 150ms ease;
+  }
+  a:hover { color: var(--brass); }
+  .t {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+</style>

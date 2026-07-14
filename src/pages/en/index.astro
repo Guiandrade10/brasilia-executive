@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Differentials from '../../components/Differentials.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import AntiApp from '../../components/AntiApp.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import { services } from '../../data/services';
+import { faqHome } from '../../data/faq';
+import { images } from '../../data/images';
+
+const lang = 'en' as const;
+
+const title = 'Executive Transportation in Brasília | Airport Transfer and Daily Hire | Brasília Executive';
+const description =
+  'Black executive sedans, suited chauffeurs, fixed prices and full English support. Airport transfers, daily hire and weddings, booked on WhatsApp.';
+
+const differentials = [
+  'Fixed price, no surprises',
+  'Flight tracking',
+  'Vetted chauffeurs',
+  'English-speaking service'
+];
+
+const howSteps = [
+  {
+    title: 'Message us on WhatsApp',
+    body: 'Send date, time, pickup and destination.'
+  },
+  {
+    title: 'We confirm a fixed price',
+    body: 'No surge pricing, no hidden costs.'
+  },
+  {
+    title: 'Your chauffeur arrives early',
+    body: 'Suited, with the car ready.'
+  }
+];
+
+const testimonials = [
+  {
+    quote: 'Three years of Brasília meetings, not a single late arrival.',
+    attribution: 'Multinational Director, São Paulo'
+  },
+  {
+    quote: 'This is the contact I share with every delegation we host.',
+    attribution: 'Embassy office'
+  },
+  {
+    quote: 'On our wedding day, it was the one piece of logistics I did not have to double-check.',
+    attribution: 'Bride, Lago Sul'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqHome.map((it) => ({
+    '@type': 'Question',
+    name: it.q[lang],
+    acceptedAnswer: { '@type': 'Answer', text: it.a[lang] }
+  }))
+};
+---
+
+<Base
+  lang={lang}
+  page="home"
+  title={title}
+  description={description}
+  schemaExtras={[faqSchema]}
+>
+  <Hero
+    lang={lang}
+    eyebrow="EXECUTIVE TRANSPORTATION IN BRASÍLIA"
+    headline="Arrive on time, in comfort, with total discretion."
+    sub="Black executive sedans, suited chauffeurs and a fixed price confirmed before pickup. Airport transfers, daily hire and full English support, booked directly on WhatsApp."
+    bgImage={images.home.src}
+    bgAlt={images.home.alt[lang]}
+  />
+
+  <Differentials items={differentials} />
+
+  <section id="servicos" class="services">
+    <div class="wrap">
+      <p class="eyebrow">SERVICES</p>
+      <h2>Four services, one standard.</h2>
+      <div class="grid">
+        {services.map((s) => (
+          <ServiceCard
+            title={s.title[lang]}
+            body={s.card[lang]}
+            href={s.href[lang]}
+            ctaLabel="See details"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <HowItWorks
+    eyebrow="HOW IT WORKS"
+    title="Three steps, no app."
+    steps={howSteps}
+  />
+
+  <AntiApp
+    title="What ride-hailing apps can't promise."
+    body="Surge pricing, random drivers and last-minute cancellations don't mix with a 9 am hearing or a 6 am flight. With us you talk to the people who drive, confirm the price upfront and get the same standard on every ride."
+  />
+
+  <Testimonials
+    title="Discretion also means not naming names."
+    items={testimonials}
+  />
+
+  <FAQ
+    title="Frequently asked questions"
+    items={faqHome.map((it) => ({ q: it.q[lang], a: it.a[lang] }))}
+  />
+
+  <FinalCTA
+    lang={lang}
+    headline="Your next Brasília schedule, sorted in one message."
+  />
+</Base>
+
+<style>
+  .services {
+    padding: 4.5rem 1.25rem;
+    background: var(--paper);
+  }
+  .services .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+  .services h2 {
+    max-width: 26ch;
+  }
+  .grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
